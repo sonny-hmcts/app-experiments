@@ -1,0 +1,14 @@
+<p>{{ pageName }}</p>
+
+<div class="govuk-form-group" [ngSwitch]="page">
+    <ng-container *ngSwitchCase="1">
+        <app-childpage pageName="childpage1"></app-childpage>
+    </ng-container>
+    <ng-container *ngSwitchCase="2">
+        <app-childpage pageName="childpage2"></app-childpage>
+    </ng-container>
+    <ng-container *ngSwitchCase="3">
+        <app-childpage pageName="childpage3"></app-childpage>
+    </ng-container>
+  </div>
+
