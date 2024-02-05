@@ -12,14 +12,18 @@ import { ChildpageComponent } from '../childpage/childpage.component';
 })
 export class JourneyBaseComponent implements Journey, OnInit, OnDestroy{
 
+  public start: number = 1;
+  public end: number = 1;
   page: number = 1;
-  start: number = 1;
-  end: number = 3;
   @Input() id: string = 'journey';
 
   @ViewChild(ChildpageComponent) child!: ChildpageComponent;
 
-  constructor(private pageStateService: PageStateService) {}
+  constructor(
+    private pageStateService: PageStateService,
+    ) {
+    this.page = this.start;
+  }
 
   next(): void {
     if (!this.hasNext()){
@@ -58,9 +62,11 @@ export class JourneyBaseComponent implements Journey, OnInit, OnDestroy{
   getId(): string {return this.id};
 
   ngOnInit() {
+    //page cannot be lower than start
+    this.page = this.start;
     console.log('JourneyComponent ngOnInit');
     //restore state
-    var state = this.pageStateService.getJourneyState(this);
+    const state = this.pageStateService.getJourneyState(this);
     if(state){
       const { page, start, end } = state;
       this.page = page;
