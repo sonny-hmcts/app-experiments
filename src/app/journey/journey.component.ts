@@ -16,7 +16,7 @@ export class JourneyComponent extends JourneyBaseComponent {
 
   public onCaseFlagStateEmitted(caseFlagState: CaseFlagState): void {
     if(caseFlagState.status === true){
-      this.next();
+      this.nextPage();
     }
   }
 }

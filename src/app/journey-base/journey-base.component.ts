@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, QueryList, Input } from '@angular/core';
 import { Journey } from '../journey';
 import { PageStateService } from '../page-state.service';
 import { ChildpageComponent } from '../childpage/childpage.component';
@@ -15,57 +15,64 @@ export class JourneyBaseComponent implements Journey, OnInit, OnDestroy{
   page: number = 1;
   start: number = 1;
   end: number = 3;
+  @Input() id: string = 'journey';
 
-  @ViewChildren(ChildpageComponent) journeys!: QueryList<ChildpageComponent>;
+  @ViewChild(ChildpageComponent) child!: ChildpageComponent;
 
   constructor(private pageStateService: PageStateService) {}
 
   next(): void {
-    if (this.hasNext()){
+    if (!this.hasNext()){
+      return;
+    }
+    this.child.next();
+  }
+
+  previous(): void {
+    if(!this.hasPrevious()) {
+      return;
+    }
+    this.previousPage();
+  }
+
+  nextPage(): void {
+    if(this.hasNext()) {
       this.page++;
     }
   }
 
-  previous(): void {
+  previousPage(): void {
     if(this.hasPrevious()) {
       this.page--;
     }
   }
 
-  hasNext(): boolean {
-    if(this.page < this.end) {
-      return true;
-    }else{
-      return false;
-    }
-  }
-  hasPrevious(): boolean {
-    if(this.page > this.start) {
-      return true;
-    }
-    return false;
-  }
+  hasNext(): boolean { return this.page < this.end};
 
-  isFinished(): boolean {
-    if(this.page === this.end) {
-      return true;
-    }
-    return false;
-  }
+  hasPrevious(): boolean {return this.page > this.start};
 
-  isStart(): boolean {
-    if(this.page === this.start) {
-      return true;
-    }
-    return false;
-  }
+  isFinished(): boolean {return (this.page === this.end)};
+
+  isStart(): boolean {return this.page === this.start};
+
+  getId(): string {return this.id};
 
   ngOnInit() {
     console.log('JourneyComponent ngOnInit');
+    //restore state
+    var state = this.pageStateService.getJourneyState(this);
+    if(state){
+      const { page, start, end } = state;
+      this.page = page;
+      this.start = start;
+      this.end = end;
+    }
   }
 
   ngOnDestroy() {
     console.log('JourneyComponent ngOnDestroy');
+    //save state
+    this.pageStateService.setJourneyState(this);
   }
 
 }

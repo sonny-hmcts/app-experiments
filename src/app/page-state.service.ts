@@ -9,6 +9,7 @@ import { Finals } from './finals';
 export class PageStateService {
   private journeysSubject: Journey[] = new Array<Journey>();
   private mainSubject: Finals | null = null;
+  private journeyState: Map<string, Journey> = new Map<string, Journey>();
 
   constructor() { }
 
@@ -22,6 +23,14 @@ export class PageStateService {
 
   setMainComponent(mainSubject: Finals): void {
     this.mainSubject=mainSubject;
+  }
+
+  setJourneyState(journey: Journey): void {
+    this.journeyState.set(journey.id, journey);
+  }
+
+  getJourneyState(journey: Journey): Journey | null {
+    return this.journeyState.get(journey.id) || null;
   }
 
   getMainComponent(): Finals | null {

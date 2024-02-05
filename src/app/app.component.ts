@@ -15,6 +15,9 @@ import { Finals } from './finals';
 })
 export class AppComponent implements Finals, AfterViewChecked {
   title = 'app-experiments';
+  page = 1;
+  maxPage = 3;
+  minPage = 1;
 
   @ViewChildren(JourneyComponent) journeys!: QueryList<JourneyComponent>;
 
@@ -32,10 +35,16 @@ export class AppComponent implements Finals, AfterViewChecked {
 
   onFinalNext(): void {
     alert('finished');
+    if(this.page < this.maxPage){
+      this.page++;
+    }
   }
 
   onFinalPrevious(): void {
     alert('last previous');
+    if(this.page > this.minPage){
+      this.page--;
+    }
   }
 
   ngAfterViewChecked(): void {

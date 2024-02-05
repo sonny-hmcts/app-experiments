@@ -1,3 +1,5 @@
+import { input } from "@angular/core";
+
 export interface Journey {
     next(): void;
     previous(): void;
@@ -5,4 +7,8 @@ export interface Journey {
     hasPrevious(): boolean;
     isFinished(): boolean;
     isStart(): boolean;
+    id: string;
+    page: number;
+    start: number;
+    end: number;
 }
