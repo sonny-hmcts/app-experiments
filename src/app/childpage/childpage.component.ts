@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CaseFlagState } from '../case-flag-state';
 
+//this will simulate childpages rendered by write-case-flag-field
+
 @Component({
   selector: 'app-childpage',
   standalone: true,

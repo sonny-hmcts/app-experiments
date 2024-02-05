@@ -2,37 +2,44 @@ import { Component, AfterViewChecked, AfterViewInit, ViewChildren, QueryList } f
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { JourneyComponent } from './journey/journey.component';
+import { JourneyTwoComponent } from './journey-two/journey.component';
 import { JourneyBaseComponent } from './journey-base/journey-base.component';
 import { PageStateService } from './page-state.service';
-import { Finals } from './finals';
+import { JourneyInstigator } from './journey-instigator';
+
+// This is the main component that will be used to simulate multiple journey components
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, JourneyComponent],
+  imports: [CommonModule, RouterOutlet, JourneyComponent, JourneyTwoComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements Finals, AfterViewChecked {
+export class AppComponent implements JourneyInstigator, AfterViewChecked {
   title = 'app-experiments';
-  page = 1;
-  maxPage = 3;
-  minPage = 1;
+  minPage = 0;
+  page = 0;
+  maxPage = 2;
 
-  @ViewChildren(JourneyComponent) journeys!: QueryList<JourneyComponent>;
+  // This will be used to get all the journey components in the app component
+  @ViewChildren('appjourneyitem') journeys!: QueryList<JourneyComponent>;
 
   constructor(private pageStateService: PageStateService) {
-    this.pageStateService.setMainComponent(this);
+    this.pageStateService.setInstigator(this);
   }
 
+  // This method will be triggered by the next button in the app component
   next(): void {
     this.pageStateService.next();
   }
 
+  // This method will be triggered by the previous button in the app component
   previous(): void {
     this.pageStateService.previous();
   }
 
+  // This method will be called by the page state service once a journey component has finished
   onFinalNext(): void {
     if(this.page < this.maxPage){
       alert('Moving on to next journey');
@@ -42,6 +49,7 @@ export class AppComponent implements Finals, AfterViewChecked {
     }
   }
 
+  // This method will be called by the page state service once a journey is at the beginning of the journey
   onFinalPrevious(): void {
     if(this.page > this.minPage){
       alert('Moving to previous journey');
@@ -51,8 +59,10 @@ export class AppComponent implements Finals, AfterViewChecked {
     }
   }
 
+  // This method will be called after each view check and will update the journey collection in the page state service
   ngAfterViewChecked(): void {
+    console.log('journeys', this.journeys.toArray());
     // Access the child component after each view check
-    this.pageStateService.setJourneyComponent(this.journeys.toArray());
+    this.pageStateService.setJourneyCollection(this.journeys.toArray());
   }
 }

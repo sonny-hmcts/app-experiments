@@ -1,4 +1,4 @@
-export interface Finals {
+export interface JourneyInstigator{
     onFinalNext(): void;
     onFinalPrevious(): void;
 }

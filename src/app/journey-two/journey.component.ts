@@ -3,19 +3,18 @@ import { CommonModule } from '@angular/common';
 import { ChildpageComponent } from '../childpage/childpage.component';
 import { JourneyBaseComponent } from '../journey-base/journey-base.component';
 import { CaseFlagState } from '../case-flag-state';
-import { PageStateService } from '../page-state.service';
 
 //this will simulate the write-case-flag-field that has child pages
 
 @Component({
-  selector: 'app-journey',
+  selector: 'app-journey-two',
   standalone: true,
   imports: [CommonModule, ChildpageComponent],
   templateUrl: './journey.component.html',
   styleUrl: './journey.component.scss'
 })
-export class JourneyComponent extends JourneyBaseComponent{
-  @Input() pageName: string = 'Journey';
+export class JourneyTwoComponent extends JourneyBaseComponent{
+  @Input() pageName: string = 'Journey-two';
 
   public onCaseFlagStateEmitted(caseFlagState: CaseFlagState): void {
     if(caseFlagState.status === true){

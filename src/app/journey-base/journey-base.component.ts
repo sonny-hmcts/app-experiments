@@ -12,9 +12,9 @@ import { ChildpageComponent } from '../childpage/childpage.component';
 })
 export class JourneyBaseComponent implements Journey, OnInit, OnDestroy{
 
-  public start: number = 1;
-  public end: number = 1;
-  page: number = 1;
+  public start: number = 0;
+  public end: number = 0;
+  page: number = 0;
   @Input() id: string = 'journey';
 
   @ViewChild(ChildpageComponent) child!: ChildpageComponent;
