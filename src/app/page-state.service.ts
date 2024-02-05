@@ -37,6 +37,10 @@ export class PageStateService {
     return this.mainSubject;
   }
 
+  resetJourneyState(): void {
+    this.journeyState.clear();
+  }
+
   public next(): void {
     if(this.journeysSubject.length <= 0){
       this.mainSubject?.onFinalNext();

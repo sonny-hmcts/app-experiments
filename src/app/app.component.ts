@@ -34,16 +34,20 @@ export class AppComponent implements Finals, AfterViewChecked {
   }
 
   onFinalNext(): void {
-    alert('finished');
     if(this.page < this.maxPage){
+      alert('Moving on to next journey');
       this.page++;
+    }else{
+      alert('finished you are at the end of all the journeys');
     }
   }
 
   onFinalPrevious(): void {
-    alert('last previous');
     if(this.page > this.minPage){
+      alert('Moving to previous journey');
       this.page--;
+    }else{
+      alert('You are at the start');
     }
   }
 
