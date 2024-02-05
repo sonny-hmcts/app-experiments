@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { JourneyComponent } from './journey/journey.component';
 import { JourneyTwoComponent } from './journey-two/journey.component';
 import { JourneyBaseComponent } from './journey-base/journey-base.component';
+import { Journey } from './journey';
 import { PageStateService } from './page-state.service';
 import { JourneyInstigator } from './journey-instigator';
 
@@ -23,7 +24,7 @@ export class AppComponent implements JourneyInstigator, AfterViewChecked {
   maxPage = 2;
 
   // This will be used to get all the journey components in the app component
-  @ViewChildren('appjourneyitem') journeys!: QueryList<JourneyComponent>;
+  @ViewChildren('appjourneyitem') journeys!: QueryList<Journey>;
 
   constructor(private pageStateService: PageStateService) {
     this.pageStateService.setInstigator(this);
@@ -61,7 +62,6 @@ export class AppComponent implements JourneyInstigator, AfterViewChecked {
 
   // This method will be called after each view check and will update the journey collection in the page state service
   ngAfterViewChecked(): void {
-    console.log('journeys', this.journeys.toArray());
     // Access the child component after each view check
     this.pageStateService.setJourneyCollection(this.journeys.toArray());
   }
