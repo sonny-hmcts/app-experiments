@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
 import { Journey } from '../journey';
 import { PageStateService } from '../page-state.service';
+import { ChildpageComponent } from '../childpage/childpage.component';
 
 @Component({
   selector: 'app-journey-base',
@@ -14,6 +15,8 @@ export class JourneyBaseComponent implements Journey, OnInit, OnDestroy{
   page: number = 1;
   start: number = 1;
   end: number = 3;
+
+  @ViewChildren(ChildpageComponent) journeys!: QueryList<ChildpageComponent>;
 
   constructor(private pageStateService: PageStateService) {}
 
@@ -30,8 +33,6 @@ export class JourneyBaseComponent implements Journey, OnInit, OnDestroy{
   }
 
   hasNext(): boolean {
-    console.log('hasNext', 
-    this.page, this.end);
     if(this.page < this.end) {
       return true;
     }else{

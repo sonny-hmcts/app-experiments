@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CaseFlagState } from '../case-flag-state';
 
 @Component({
   selector: 'app-childpage',
@@ -9,4 +10,11 @@ import { Component, Input } from '@angular/core';
 })
 export class ChildpageComponent {
   @Input() pageName: string = 'childpage';
+
+  @Output() public caseFlagStateEmitter: EventEmitter<CaseFlagState> = new EventEmitter<CaseFlagState>();
+
+  public next(): void {
+    this.caseFlagStateEmitter.emit({ status:true })
+  }
+
 }
